@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - ldot-virtual-da-bot-service
+name: Build and deploy Node.js app to Azure Web App - ldotbot-service
 
 on:
   push:
@@ -21,18 +21,11 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: npm install
+      - name: npm install, build, and test
         run: |
           npm install
-
-      - name: npm build
-        run: |
           npm run build --if-present
-
-
-     # - name: npm test
-     #   run: |
-     #   npm run test --if-present
+          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -57,7 +50,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ldot-virtual-da-bot-service'
+          app-name: 'ldotbot-service'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_90E04B429B5A49F6AA6B6234A5FDBB22 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_53C2517558E94E9CA8C4ABE28CC4081E }}
           package: .
